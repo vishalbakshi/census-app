@@ -8,14 +8,20 @@ make_plot <- function(data, ruca_level, plot_title){
     data=data,
     aes(x=xs, y=get(ruca_level))) + 
     geom_bar(stat='identity') + 
-    
+    # start x and y axes at 0,0
+    scale_x_discrete(expand = c(0,0)) +
+    scale_y_continuous(expand = c(0,0)) + 
     theme(
+      # make background white
+      panel.background = element_rect(fill = "white"),
+      
+      # add black axis lines
+      axis.line.x = element_line(color = "black"),
+      axis.line.y = element_line(color = "black"),
+  
+      
       # Rotate x-axis labels
-      axis.text.x=element_text(
-        angle = -90, 
-        vjust = 0.5, 
-        hjust=1, 
-        size=12),
+      axis.text.x=element_text(angle = 45, vjust = 1, hjust=1, size=12),
       
       # Resize x-axis labels and move them away from axis
       axis.title.x=element_text(vjust=-0.75,size=14),
