@@ -28,7 +28,7 @@ names(state_choices) <- state_df[["DESCRIPTION"]]
    markdown("## How do I use this app?"),
    markdown("Select a *state*, *sex* and *work status* in the dropdowns below to view a plot and tables of Earnings Estimates and Margins of Error for each RUCA level. You can download the tables, full dataset and plot by clicking the download button under each section."),
    markdown("## Where can I learn more?"),
-   markdown("Read [the documentation](https://vishalbakshi.github.io/blog/markdown/2021/09/21/shiny-census-app.html) for this app or get in touch with me at vdbakshi@gmail.com.")
+   markdown("Visit [the GitHub repo to read the documentation](https://github.com/vishalbakshi/census-app#census-app) for this app.")
    ),
    markdown('---'),
    selectInput(
