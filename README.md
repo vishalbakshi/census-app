@@ -8,7 +8,7 @@ You can access the app at [vbakshi.shinyapps.io/census-app](http://vbakshi.shiny
 
 - [Backstory](#backstory)
 - [Codebase](#codebase)
-  - [`app.R`](#app.r)
+  - [`app.R`](#app-r)
     - [What's in my `ui`?](#whats-in-my-ui)
       - [Dropdowns](#dropdowns)
       - [Tables](#tables)
@@ -19,7 +19,7 @@ You can access the app at [vbakshi.shinyapps.io/census-app](http://vbakshi.shiny
       - [Render Outputs](#render-outputs)
       - [Prepare Dynamic Text](#prepare-dynamic-text)
       - [Handle Downloads](#handle-downloads)
-  - [`prep_db.R`](#prep_db.r)
+  - [`prep_db.R`](#prep_db-r)
     - [Database Tables](#database-tables)
       - [b20005](#b20005)
       - [b20005_vars](#b20005_vars)
@@ -27,28 +27,28 @@ You can access the app at [vbakshi.shinyapps.io/census-app](http://vbakshi.shiny
     - [Create Tables](#create-tables)
     - [Write to Tables](#write-to-tables)
     - [Load the Data](#load-the-data)
-  - [`get_b20005_ruca_aggregate_earnings.R`](#get_b20005_ruca_aggregate_earnings.r)
+  - [`get_b20005_ruca_aggregate_earnings.R`](#get-b20005-ruca-aggregate-earnings-r)
     - [Get Variable Names](#get-variable-names)
     - [Derive RUCA Level Estimates and MOE](#derive-ruca-level-estimates-and-moe)
-  - [`calculate_median.R`](#calculate_median.r)
+  - [`calculate_median.R`](#calculate-median-r)
     - [Create Frequency Distribution](#create-frequency-distribution)
     - [Calculate Weighted Total](#calculate-weighted-total)
     - [Approximate Standard Error](#approximate-standard-error)
     - [Calculate Median Estimate Bounds](#calculate-median-estimate-bounds)
     - [Reshape the Data](#reshape-the-data)
-  - [`format_query_result.R`](#format_query_result.r)
+  - [`format_query_result.R`](#format-query-result-r)
     - [Extract `data.frame` Objects from List](#extract-data.frame-objects-from-list)
     - [Reshape data.frame Objects](#reshape-data.frame-objects)
     - [Add Descriptive Labels](#add-descriptive-labels)
-  - [`get_b20005_labels.R`](#get_b20005_labels.r)
+  - [`get_b20005_labels.R`](#get-b20005-labels-r)
     - [Get Earnings Population Estimate Labels](#get-earnings-population-estimate-labels)
     - [Get All Labels](#get-all-labels)
-  - [`get_b20005_tract_earnings.R`](#get_b20005_tract_earnings.r)
+  - [`get_b20005_tract_earnings.R`](#get-b20005-tract-earnings-r)
     - [Get Variable Names](#get-variable-names-1)
     - [Join Tables](#join-tables)
-  - [`get_b20005_states.R`](#get_b20005_states.r)
-  - [`get_design_factor.R`](#get_design_factor.r)
-  - [`make_plot.R`](#make_plot.r)
+  - [`get_b20005_states.R`](#get-b20005-states-r)
+  - [`get_design_factor.R`](#get-design-factor-r)
+  - [`make_plot.R`](#make-plot-r)
 
 ## <a name="#backstory"></a>Backstory
 
@@ -76,7 +76,7 @@ I was able to calculate the median earnings estimate (and associated standard er
 
 I built this app using the R package <a href="https://shiny.rstudio.com/reference/shiny/latest/">`Shiny`</a> which handles both the UI and the server. I store the data in a `sqlite` database and access it with queries written using the <a href="https://cran.r-project.org/web/packages/RSQLite/RSQLite.pdf">`RSQLite`</a> package which uses the <a href="https://dbi.r-dbi.org/reference/">DBI</a> API. The following sections break down the R scripts based on functionality. Click on the script name to navigate to that section.
 
-- [`app.R`](#app.r)
+- [`app.R`](#app-r)
   - UI and server functions to handle people inputs and plot/table/text outputs
 - [`prep_db.R`](#prep-db-r)
   - Import, clean, combine and then load data into the `census_app_db.sqlite` database
@@ -88,7 +88,7 @@ I built this app using the R package <a href="https://shiny.rstudio.com/referenc
   - Formats `calculate_median` query results
 - [`get_b20005_labels.R`](#get-b20005-labels-r)
   - Queries the database for descriptive labels of B20005 table variables
-- [`get_b20005_tract_earnings.R`](#get-b20005-tract-earnings)
+- [`get_b20005_tract_earnings.R`](#get-b20005-tract-earnings-r)
   - Queries the database for Census Tract-level earnings and associated margins of error 
 - [`get_b20005_states.R`](#get-b20005-states-r)
   - Queries the SQLite database for a list of U.S. states 
@@ -396,7 +396,7 @@ output$download_ruca_earnings <- downloadHandler(
 
 ---
 
-## <a name="prep-db-r"></a>`prep_db.R`
+## <a name="prep_db-r"></a>`prep_db.R`
 This script is meant to be run locally, and is not deployed, as doing so would create a long delay to load the app.
 
 ### <a name="database-tables"></a>Database Tables 
