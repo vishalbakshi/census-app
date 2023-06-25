@@ -78,7 +78,7 @@ I built this app using the R package <a href="https://shiny.rstudio.com/referenc
 
 - [`app.R`](#app-r)
   - UI and server functions to handle people inputs and plot/table/text outputs
-- [`prep_db.R`](#prep-db-r)
+- [`prep_db.R`](#prep_db-r)
   - Import, clean, combine and then load data into the `census_app_db.sqlite` database
 - [`get_b20005_ruca_aggregate_earnings.R`](#get-b20005-ruca-aggregate-earnings-r)
   - Queries the database for earnings and associated margins of error for RUCA levels derived from Census Tracts
@@ -97,7 +97,7 @@ I built this app using the R package <a href="https://shiny.rstudio.com/referenc
 - [`make_plot.R`](#make-plot-r)
   - Creates a bar plot object
 
-## <a name="#app-r"></a>`app.R`
+## <a name="app-r"></a>`app.R`
 
 A shiny app has three fundamental components:
 
