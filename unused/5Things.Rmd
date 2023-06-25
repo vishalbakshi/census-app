@@ -1,0 +1,116 @@
+---
+title: "Tasks Marley Prefers Using R For"
+author: "Marley Buchman"
+output: 
+  html_document:
+    code_folding: 'show'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```
+# https://towardsdatascience.com/breaking-down-geocoding-in-r-a-complete-guide-1d0f8acd0d4b
+```
+
+```{r results='hide'}
+library(tidyverse)
+library(tidycensus)
+library(sf)
+library(mapview)
+library(mapedit)
+library(DT)
+```
+
+### Tidycensus
+
+[Python Census Library](https://github.com/datamade/census)
+
+[rOpenSci](https://ropensci.org/)
+
+```{r results='hide'}
+housing_units_variable_name <- "B25001_001"
+
+multnomah_county_housing_units <- get_acs(
+  geography = "tract", 
+  variables = housing_units_variable_name, 
+  year = 2019, 
+  state = "OR", 
+  county = "Multnomah", 
+  geometry = TRUE
+  )
+```
+
+
+```{r}
+multnomah_county_housing_units %>% st_drop_geometry() %>% datatable()
+```
+
+### Mapview
+
+
+```{r}
+mapview(multnomah_county_housing_units, zcol = "estimate")
+```
+
+
+To my knowledge there isn't a similar library in the python ecosystem to mapview. When I have made interactive maps with python I have used folium. To make a similar map the folium code would look like this with multnomah_county_housing_units being a GeoPandas dataframe. 
+```
+m = folium.Map(location=[45.5148, -122.6791], zoom_start=11)
+
+choropleth = folium.Choropleth(
+    geo_data=multnomah_county_housing_units,
+    name='choropleth',
+    data=multnomah_county_housing_units,
+    columns=['index', 'estimate'],
+    key_on='feature.properties.index',
+    bins=bins,
+    fill_color='Purples',
+    highlight=True,
+    fill_opacity = 0.5, 
+    line_opacity = 0.2
+).add_to(m)
+
+
+choropleth.geojson.add_child(
+    folium.features.GeoJsonTooltip(['estimate'])
+).add_to(m)
+
+m
+```
+
+
+### Mapedit
+
+```{r}
+# my_new_shape <- editMap(mapview(multnomah_county_housing_units))$drawn
+```
+
+
+
+```{r}
+# multnomah_county_housing_units %>%
+#   st_transform(crs = st_crs(my_new_shape)) %>%
+#   st_join(my_new_shape, left = FALSE) %>%
+#   rename(housing_units = estimate) %>%
+#   mapview(zcol = "housing_units")
+```
+
+### Broom
+
+```{r}
+reg_model <- lm(mpg ~ ., data = mtcars)
+
+
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest() %>% 
+  mutate(regression_models = map(data, ~ lm(mpg ~ ., data = .))) %>% 
+  mutate(models_glanced = map(regression_models, broom::glance)) %>% 
+  mutate(models_tidy = map(regression_models, broom::tidy)) %>% 
+  unnest(models_tidy) %>% 
+  select(-data, -regression_models, -models_glanced) %>% 
+  datatable()
+
+```

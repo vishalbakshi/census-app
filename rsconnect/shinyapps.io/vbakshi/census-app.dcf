@@ -1,0 +1,14 @@
+name: census-app
+title: census-app
+username:
+account: vbakshi
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4684845
+bundleId: 5074554
+url: https://vbakshi.shinyapps.io/census-app/
+when: 1632698835.87062
+lastSyncTime: 1632698835.87063
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .ipynb_checkpoints/Untitled-checkpoint.ipynb|.RData|data/2019_PUMS_5yr_Design_Factors.csv|data/ruca_codes.csv|data/ruca_levels.csv|data/state_codes.csv|prep_db.R|tests.R|images|unused

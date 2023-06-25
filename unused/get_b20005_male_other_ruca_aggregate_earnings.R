@@ -1,0 +1,38 @@
+library(DBI)
+get_b20005_male_other_ruca_aggregate_earnings <- function(state, ruca_level) {
+  census_app_db <- dbConnect(RSQLite::SQLite(), "census_app_db.sqlite")
+  rs <- dbGetQuery(
+    census_app_db, 
+    "SELECT 
+      ruca.DESCRIPTION,
+      SUM(b20005.B20005_029E) AS B20005_029E, 
+      SUM(b20005.B20005_030E) AS B20005_030E,
+      SUM(b20005.B20005_031E) AS B20005_031E,
+      SUM(b20005.B20005_032E) AS B20005_032E,
+      SUM(b20005.B20005_033E) AS B20005_033E,
+      SUM(b20005.B20005_034E) AS B20005_034E,
+      SUM(b20005.B20005_035E) AS B20005_035E,
+      SUM(b20005.B20005_036E) AS B20005_036E,
+      SUM(b20005.B20005_037E) AS B20005_037E,
+      SUM(b20005.B20005_038E) AS B20005_038E,
+      SUM(b20005.B20005_039E) AS B20005_039E,
+      SUM(b20005.B20005_040E) AS B20005_040E,
+      SUM(b20005.B20005_041E) AS B20005_041E,
+      SUM(b20005.B20005_042E) AS B20005_042E,
+      SUM(b20005.B20005_043E) AS B20005_043E,
+      SUM(b20005.B20005_044E) AS B20005_044E,
+      SUM(b20005.B20005_045E) AS B20005_045E,
+      SUM(b20005.B20005_046E) AS B20005_046E,
+      SUM(b20005.B20005_047E) AS B20005_047E,
+      SUM(b20005.B20005_048E) AS B20005_048E
+    FROM 'b20005' 
+    INNER JOIN ruca 
+    ON b20005.FIPS = ruca.TRACTFIPS
+    WHERE 
+      b20005.STATE = $state
+    GROUP BY ruca.DESCRIPTION",
+    params = list(state=state))
+  
+  dbDisconnect(census_app_db)
+  return(rs)
+}

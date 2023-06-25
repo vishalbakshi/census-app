@@ -1,0 +1,13 @@
+filename					size	chardetect output		file -I charset value
+-----------				-----	-----------------------------	---------------------
+b200005.csv				74.7MB	utf-8 with confidence 0.99	us-ascii
+b200005_with_second_row_removed.csv	46.5MB	utf-8 with confidence 0.99	us-ascii
+just_the_second_row.csv			17kB	UTF-8-SIG with confidence 1.0	utf-8
+
+iconv -f us-ascii -t utf-8 b20005.csv > b20005_utf_8.csv 
+
+filename					size	chardetect output		file -I charset value
+-----------				-----	-----------------------------	---------------------
+b20005_utf_8.csv				43.4MB	ascii with confidence 1.0		us-ascii
+
+
