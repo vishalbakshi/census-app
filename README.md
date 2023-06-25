@@ -37,8 +37,8 @@ You can access the app at [vbakshi.shinyapps.io/census-app](http://vbakshi.shiny
     - [Calculate Median Estimate Bounds](#calculate-median-estimate-bounds)
     - [Reshape the Data](#reshape-the-data)
   - [`format_query_result.R`](#format-query-result-r)
-    - [Extract `data.frame` Objects from List](#extract-data.frame-objects-from-list)
-    - [Reshape data.frame Objects](#reshape-data.frame-objects)
+    - [Extract `data.frame` Objects from List](#extract-dataframe-objects-from-list)
+    - [Reshape data.frame Objects](#reshape-dataframe-objects)
     - [Add Descriptive Labels](#add-descriptive-labels)
   - [`get_b20005_labels.R`](#get-b20005-labels-r)
     - [Get Earnings Population Estimate Labels](#get-earnings-population-estimate-labels)
@@ -785,7 +785,7 @@ median_data <- data.frame(
 
 The purpose of this function is to receive two `data.frame` objects, one for earnings `estimate` values, and one for the corresponding `moe` values, and return a single `data.frame` which is ready to be displayed in a `tableOutput`.
 
-### <a name="extract-data-frame-objects-from-list"></a>Extract `data.frame` Objects from List
+### <a name="extract-dataframe-objects-from-list"></a>Extract `data.frame` Objects from List
 
 Since `get_b20005_ruca_aggregate_earnings` returns a named list, I first pull out the `estimate` and `moe` `data.frame` objects:
 
@@ -797,7 +797,7 @@ estimate <- rs[["estimate"]]
 moe <- rs[["moe"]]
 ```
 
-### <a name="reshape-data-frame-objects"></a>Reshape data.frame Objects
+### <a name="reshape-dataframe-objects"></a>Reshape data.frame Objects
 
 These  `data.frame` objects have RUCA levels in the column `DESCRIPTION` and one column for each population estimate. For example, the `estimate` for Alabama Full Time Female workers looks like this:
 
