@@ -1,20 +1,6 @@
----
-aliases:
-- /markdown/2021/09/21/shiny-census-app
-categories:
-- R
-- data analysis
-- SQL
-date: '2021-09-21'
-date-modified: '2023-02-20'
-description: An explanation of my development process for a census data shiny app
-layout: post
-title: R Shiny Census App
-freeze: true
-author: Vishal Bakshi
----
+# census-app
 
-In this blog post, I'll walk through my development process for a U.S. Census data visualization web app I created using the Shiny package in R. 
+I'll walk through my development process for a U.S. Census data visualization web app I created using the Shiny package in R. 
 
 You can access the app at [vbakshi.shinyapps.io/census-app](http://vbakshi.shinyapps.io/census-app). 
 
@@ -70,7 +56,7 @@ I started this project by reading the handbook <a href="https://www.census.gov/c
 
 During the process of recreating the derived median earnings estimate calculations, I was unable to recreate a key value from the handbook (the Standard Error for the 50% proportion, calculated to be 0.599) because I was unable to deduce the values used in the following formula referenced from page 17 of the <a href="https://www2.census.gov/programs-surveys/acs/tech_docs/pums/accuracy/2015_2019AccuracyPUMS.pdf">PUMS Accuracy of the Data documentation</a>:
 
-![Standard Error equals Design Factor times square root of the product of 95 over 5B and 50 squared](se_formula_original.png)
+![Standard Error equals Design Factor times square root of the product of 95 over 5B and 50 squared](images/se_formula_original.png)
 
 The documentation defines B as the _base_, which is the _calculated weighted total_. I chose the value of 1.3 for the design factor DF since it corresponds to STATE = Minnesota, CHARTYP = Population, CHARACTERISTIC = Person Earnings/Income in the <a href="https://www2.census.gov/programs-surveys/acs/tech_docs/pums/accuracy/2019_PUMS_5yr_Design_Factors.csv">Design Factors CSV published by the Census Bureau</a>.
 
@@ -82,7 +68,7 @@ I called the <a href="https://www.census.gov/programs-surveys/acs/contact.html">
 
 The updated formula is then:
 
-![Standard Error equals Design Factor times square root of the product of 87.5 over 12.5B and 50 squared](se_formula_modified.png)
+![Standard Error equals Design Factor times square root of the product of 87.5 over 12.5B and 50 squared](images/se_formula_modified.png)
 
 I was able to calculate the median earnings estimate (and associated standard error and margin of error) within a few percent of the values given in the handbook. This provided me with confirmation that I was ready to expand my code to calculate median earnings estimates for other subgroups.
 
@@ -130,15 +116,15 @@ My app's UI has four sections:
 
 1. Dropdowns to select state, sex and work status for which the person using the app wants ACS 5-year earnings estimates
 
-<img src="ui_dropdowns.png" alt="Dropdowns to select state, sex and work status for which the person using the app wants ACS 5-year earnings estimates" width="30%"/>
+<img src="images/ui_dropdowns.png" alt="Dropdowns to select state, sex and work status for which the person using the app wants ACS 5-year earnings estimates" width="30%"/>
 
 2. A table with the estimate, standard error and margin of error for median earnings
 
-![A table with the estimate, standard error and margin of error for median earnings](median_table.png)
+![A table with the estimate, standard error and margin of error for median earnings](images/median_table.png)
 
 3. A bar plot of population estimates for earnings levels for the selected state, sex, work status and RUCA (Rural-Urban Commuting Areas) level
 
-![A bar plot of population estimates for earnings levels for the selected state, sex, work status and RUCA (Rural-Urban Commuting Areas) level](bar_plot.png)
+![A bar plot of population estimates for earnings levels for the selected state, sex, work status and RUCA (Rural-Urban Commuting Areas) level](images/bar_plot.png)
 
 4. A table with population estimates for earnings levels for each RUCA level for the selected state, sex and work status
 
@@ -417,7 +403,7 @@ This script is meant to be run locally, and is not deployed, as doing so would c
 
 The database diagram is shown below (created using <a href="https://dbdiagram.io">dbdiagram.io</a>):
 
-![Database diagram showing the database table schemas and their relationships](census-app-db.jpg)
+![Database diagram showing the database table schemas and their relationships](images/census-app-db.jpg)
 
 I have five tables in my database:
 
@@ -572,7 +558,7 @@ Since the `label` string contains the sex and work status, I assign a `label_wil
 
 Once the variables are returned, the actual values are queried from `b20005`, grouped by RUCA level. The ACS handbook <a href="https://www.census.gov/content/dam/Census/library/publications/2020/acs/acs_general_handbook_2020.pdf">Understanding and Using American Community Survey Data: What All Data Users Need to Know</a> shows how to calculate that margin of error for derived estimates. In our case, the margin of error for a RUCA level such as "Urban" for a given state is derived from the margin of error of individual Census Tracts using the formula below:
 
-![The MOE for a sum of estimates is the square root of the sum of MOEs squared](moe_formula.png)
+![The MOE for a sum of estimates is the square root of the sum of MOEs squared](images/moe_formula.png)
 
 Translating this to a SQLite query:
 
@@ -827,7 +813,7 @@ The `moe` `data.frame` has a similar layout.
 
 However, in the UI, I want the table to look like this:
 
-![Population estimates for earnings levels from $1 to $2499 up to $100000 and more for Alabama Full Time Female Workers](alabama_ft_female_earnings_table.png)
+![Population estimates for earnings levels from $1 to $2499 up to $100000 and more for Alabama Full Time Female Workers](images/alabama_ft_female_earnings_table.png)
 
 To achieve this, I first `t`ranspose the `estimate` and `moe` `data.frame`s...
 
